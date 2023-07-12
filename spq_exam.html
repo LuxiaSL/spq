@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<style>
+body{
+	background-color:tan;
+	text-align: center
+}
+.question{
+	font-size:225%;
+}
+.answers-box{
+	display:flex;
+	justify-content:space-around;
+}
+.answers{
+	font-size:175%;
+}
+.interpretations{
+	font-size:175%;
+}
+#header{
+	font-size:450%;
+}
+#subheader{
+	font-size:150%;
+	font-style:italic;
+	margin-top:-2em;
+}
+</style>
+<html>
+<body>
+
+<h3 id='header'>Schizotypal Personality Questionnaire</h3>
+<p id='subheader'>Please take your time, and make sure to answer the following as close to your lived experience as possible!</p><br>
+
+<form id="questionnaire">
+  <!-- Questions and radio buttons will be inserted here by JavaScript -->
+</form>
+
+<button id="submit-button">Submit</button>
+
+
+<h2>Scores and Interpretations</h2>
+
+<pre id="scores"></pre>
+
+
+<script>
+  // Wait until the DOM is fully loaded before running the script
+  document.addEventListener('DOMContentLoaded', (event) => {
+
+  // Define the questionnaire data
+    var questionnaireData = {
+  1: "Do you sometimes feel that things you see on the TV or read in the newspaper have a special meaning for you?",
+  2: "I sometimes avoid going to places where there will be many people because I will get anxious.",
+  3: "Have you had experiences with the supernatural?",
+  4: "Have you often mistaken objects or shadows for people, or noises for voices?",
+  5: "Other people see me as slightly eccentric (odd).",
+  6: "I have little interest in getting to know other people.",
+  7: "People sometimes find it hard to understand what I am saying.",
+  8: "People sometimes find me aloof and distant.",
+  9: "I am sure I am being talked about behind my back.",
+  10: "I am aware that people notice me when I go out for a meal or to see a film.",
+  11: "I get very nervous when I have to make polite conversation.",
+  12: "Do you believe in telepathy (mind-reading)?",
+  13: "Have you ever had the sense that some person or force is around you, even though you cannot see anyone?",
+  14: "People sometimes comment on my unusual mannerisms and habits.",
+  15: "I prefer to keep to myself.",
+  16: "I sometimes jump quickly from one topic to another when speaking.",
+  17: "I am poor at expressing my true feelings by the way I talk and look.",
+  18: "Do you often feel that other people may harm you?",
+  19: "Do some people drop hints about you or say things with a double meaning?",
+  20: "Do you ever get nervous when someone is walking behind you?",
+  21: "Are you sometimes sure that other people can tell what you are thinking?",
+  22: "When you look at a person, or yourself in a mirror, have you ever seen the face change right before your eyes?",
+  23: "Sometimes other people think that I am a little strange.",
+  24: "I am mostly quiet when with other people.",
+  25: "I sometimes forget what I am trying to say.",
+  26: "I rarely laugh and smile.",
+  27: "Do you sometimes get concerned that friends or co-workers are not really loyal or trustworthy?",
+  28: "Have you ever noticed a common event or object that seemed to be a special sign for you?",
+  29: "I get anxious when meeting people for the first time.",
+  30: "Do you believe in clairvoyancy (psychic forces, fortune telling)?",
+  31: "I often hear a voice speaking my thoughts aloud.",
+  32: "Some people think that I am a very bizarre person.",
+  33: "I find it hard to be emotionally close to other people.",
+  34: "I often go off topic when speaking.",
+  35: "My 'non-verbal' communication (smiling and nodding during a conversation) is poor.",
+  36: "I feel I have to be on my guard even with friends.",
+  37: "Do you sometimes see special meanings in advertisements, shop windows, or in the way things are arranged around you?",
+  38: "Do you often feel nervous when you are in a group of unfamiliar people?",
+  39: "Can other people feel your feelings when they are not there?",
+  40: "Have you ever seen things invisible to other people?",
+  41: "Do you feel that there is no-one you are really close to outside of your immediate family, or people you can confide in or talk to about personal problems?",
+  42: "Some people find me a bit vague and elusive during a conversation.",
+  43: "I am poor at returning social courtesies and gestures.",
+  44: "Do you often pick up hidden threats or put-downs from what people say or do?",
+  45: "When shopping do you get the feeling that other people are taking notice of you?",
+  46: "I feel very uncomfortable in social situations involving unfamiliar people.",
+  47: "Have you had experiences with astrology, seeing the future, UFOs, extra-sensory perception, or a sixth sense?",
+  48: "Do everyday things seem unusually large or small?",
+  49: "Writing letters to friends is more trouble than it is worth.",
+  50: "I sometimes use words in unusual ways.",
+  51: "I tend to avoid eye contact when conversing with others.",
+  52: "Have you found that it is best not to let other people know too much about you?",
+  53: "When you see people talking to each other, do you often wonder if they are talking about you?",
+  54: "I would feel very anxious if I had to give a speech in front of a large group of people.",
+  55: "Have you ever felt that you are communicating with another person telepathically (by mind-reading)?",
+  56: "Does your sense of smell sometimes become unusually strong?",
+  57: "I tend to keep in the background on social occasions.",
+  58: "Do you tend to wander off the topic when having a conversation?",
+  59: "I often feel that others are out to get me.",
+  60: "Do you sometimes feel that other people are watching you?",
+  61: "Do you ever suddenly feel distracted by distant sounds that you are not normally aware of?",
+  62: "I attach little importance to having close friends.",
+  63: "Do you sometimes feel that people are talking about you?",
+  64: "Are your thoughts sometimes so strong that you can almost hear them?",
+  65: "Do you often have to keep an eye out to stop people from taking advantage of you?",
+  66: "Do you feel that you are unable to get 'close' to people?",
+  67: "I am an odd, unusual person.",
+  68: "I do not have an expressive and lively way of speaking.",
+  69: "I find it hard to communicate clearly what I want to say to people.",
+  70: "I have some eccentric (odd) habits.",
+  71: "I feel very uneasy talking to people I do not know well.",
+  72: "People occasionally comment that my conversation is confusing.",
+  73: "I tend to keep my feelings to myself.",
+  74: "People sometimes stare at me because of my odd appearance."
+}
+
+    // Define the item lists for the subscales and broad factors
+    var COGPER_ITEMS = [1, 3, 4, 9, 10, 12, 13, 18, 19, 21, 22, 27, 28, 30, 31, 36, 37, 39, 40, 44, 45, 47, 48, 52, 53, 55, 56, 59, 60, 61, 63, 64, 65];
+    var INTERPER_ITEMS = [2, 6, 8, 9, 11, 15, 17, 18, 20, 24, 26, 27, 29, 33, 35, 36, 38, 41, 43, 44, 46, 49, 51, 52, 54, 57, 59, 62, 65, 66, 68, 71, 73];
+    var DISORG_ITEMS = [5, 7, 14, 16, 23, 25, 32, 34, 42, 50, 58, 67, 69, 70, 72, 74];
+    var IDEAS_OF_REFERENCE_ITEMS = [1, 10, 19, 28, 37, 45, 53, 60, 63];
+    var EXCESSIVE_SOCIAL_ANXIETY_ITEMS = [2, 11, 20, 29, 38, 46, 54, 71];
+    var ODD_BELIEFS_OR_MAGICAL_THINKING_ITEMS = [3, 12, 21, 30, 39, 47, 55];
+    var UNUSUAL_PERCEPTUAL_EXPERIENCES_ITEMS = [4, 13, 22, 31, 40, 48, 56, 61, 64];
+    var ODD_OR_ECCENTRIC_BEHAVIOR_ITEMS = [5, 14, 23, 32, 67, 70, 74];
+    var NO_CLOSE_FRIENDS_ITEMS = [6, 15, 24, 33, 41, 49, 57, 62, 66];
+    var ODD_SPEECH_ITEMS = [7, 16, 25, 34, 42, 50, 58, 69, 72];
+    var CONSTRICTED_AFFECT_ITEMS = [8, 17, 26, 35, 43, 51, 68, 73];
+    var SUSPICIOUSNESS_ITEMS = [9, 18, 27, 36, 44, 52, 59, 65];
+
+
+    // Insert the questions and radio buttons into the form
+	// question answers-box answers
+	let i = 1;
+    for (var item in questionnaireData) {
+        var question = questionnaireData[item];
+        document.getElementById('questionnaire').innerHTML += 
+            '<br><p class="question">'+ i + ': ' + question + '</p>' +
+            '<input type="radio" name="' + item + '" value="1"> Yes<br>' +
+            '<input type="radio" name="' + item + '" value="0" checked> No<br><br>';
+			i++;
+    }
+
+
+    // Function to calculate the total score and subscale scores
+    function calculateScores() {
+      var totalScore = 0;
+      var cogperScore = 0;
+      var interperScore = 0;
+      var disorgScore = 0;
+      var ideasOfReferenceScore = 0;
+      var excessiveSocialAnxietyScore = 0;
+      var oddBeliefsOrMagicalThinkingScore = 0;
+      var unusualPerceptualExperiencesScore = 0;
+      var oddOrEccentricBehaviorScore = 0;
+      var noCloseFriendsScore = 0;
+      var oddSpeechScore = 0;
+      var constrictedAffectScore = 0;
+      var suspiciousnessScore = 0;
+
+      for (var item in questionnaireData) {
+        var response = document.querySelector('input[name="' + item + '"]:checked').value;
+        if (response == '1') {
+          totalScore += 1;
+          if (COGPER_ITEMS.includes(parseInt(item))) {
+            cogperScore += 1;
+          }
+          if (INTERPER_ITEMS.includes(parseInt(item))) {
+            interperScore += 1;
+          }
+          if (DISORG_ITEMS.includes(parseInt(item))) {
+            disorgScore += 1;
+          }
+          if (IDEAS_OF_REFERENCE_ITEMS.includes(parseInt(item))) {
+            ideasOfReferenceScore += 1;
+          }
+          if (EXCESSIVE_SOCIAL_ANXIETY_ITEMS.includes(parseInt(item))) {
+            excessiveSocialAnxietyScore += 1;
+          }
+          if (ODD_BELIEFS_OR_MAGICAL_THINKING_ITEMS.includes(parseInt(item))) {
+            oddBeliefsOrMagicalThinkingScore += 1;
+          }
+          if (UNUSUAL_PERCEPTUAL_EXPERIENCES_ITEMS.includes(parseInt(item))) {
+            unusualPerceptualExperiencesScore += 1;
+          }
+          if (ODD_OR_ECCENTRIC_BEHAVIOR_ITEMS.includes(parseInt(item))) {
+            oddOrEccentricBehaviorScore += 1;
+          }
+          if (NO_CLOSE_FRIENDS_ITEMS.includes(parseInt(item))) {
+            noCloseFriendsScore += 1;
+          }
+          if (ODD_SPEECH_ITEMS.includes(parseInt(item))) {
+            oddSpeechScore += 1;
+          }
+          if (CONSTRICTED_AFFECT_ITEMS.includes(parseInt(item))) {
+            constrictedAffectScore += 1;
+          }
+          if (SUSPICIOUSNESS_ITEMS.includes(parseInt(item))) {
+            suspiciousnessScore += 1;
+          }
+        }
+    }
+    let scores = {
+        'Total Score': totalScore,
+        'Cognitive-Perceptual Score': cogperScore,
+        'Interpersonal Score': interperScore,
+        'Disorganized Score': disorgScore,
+        'Ideas of Reference Score': ideasOfReferenceScore,
+        'Excessive Social Anxiety Score': excessiveSocialAnxietyScore,
+        'Odd Beliefs or Magical Thinking Score': oddBeliefsOrMagicalThinkingScore,
+        'Unusual Perceptual Experiences Score': unusualPerceptualExperiencesScore,
+        'Odd or Eccentric Behavior Score': oddOrEccentricBehaviorScore,
+        'No Close Friends Score': noCloseFriendsScore,
+        'Odd Speech Score': oddSpeechScore,
+        'Constricted Affect Score': constrictedAffectScore,
+        'Suspiciousness Score': suspiciousnessScore
+    };
+    // Call interpretScores and display the interpretations
+    var interpretations = interpretScores(scores);
+    document.getElementById('scores').innerText = interpretations;
+}
+
+
+// Function to interpret the scores
+function interpretScores(scores) {
+	// define the interpretations
+   let interpret = {
+	"Cognitive-Perceptual Score":"Your score in the Cognitive-Perceptual factor suggests a tendency to experience unusual perceptual phenomena, odd thoughts, and beliefs.",
+    "Interpersonal Score":"Your score in the Interpersonal factor indicates difficulty with interpersonal relationships and social interactions. You may experience social anxiety, discomfort, or have limited close friendships.",
+    "Disorganized Score":"Your score in the Disorganized factor reflects disorganized thinking, speech, or behavior. You may exhibit eccentric or odd behaviors that are perceived as unusual by others.",
+    "Ideas of Reference Score":"Your score in Ideas of Reference suggests a tendency to interpret neutral events as personally significant or having special meaning to oneself.",
+    "Excessive Social Anxiety Score":"Your score in Excessive Social Anxiety indicates heightened anxiety in social situations, leading to discomfort or avoidance.",
+    "Odd Beliefs or Magical Thinking Score":"Your score in Odd Beliefs or Magical Thinking suggests the endorsement of unusual or idiosyncratic beliefs or beliefs in magical or supernatural phenomena.",
+    "Unusual Perceptual Experiences Score":"Your score in Unusual Perceptual Experiences indicates experiences of perceptual phenomena that may be uncommon or unconventional, such as illusions or hallucinations.",
+    "Odd or Eccentric Behavior Score":"Your score in Odd or Eccentric Behavior suggests engaging in behaviors perceived as eccentric or unconventional by others.",
+    "No Close Friends Score":"Your score in No Close Friends indicates a lack of close friendships or limited social connections.",
+    "Odd Speech Score":"Your score in Odd Speech suggests unconventional speech patterns, including unusual word usage, idiosyncratic expressions, or peculiar intonation.",
+    "Constricted Affect Score":"Your score in Constricted Affect indicates limited emotional expressiveness or reduced range of emotional responses.",
+    "Suspiciousness Score":"Your score in Suspiciousness suggests a heightened level of suspiciousness or mistrust toward others."
+  }
+  
+  var interpretations = '';
+  
+  var categories = ['Cognitive-Perceptual Score', 'Interpersonal Score', 'Disorganized Score', 
+                    'Ideas of Reference Score', 'Excessive Social Anxiety Score', 
+                    'Odd Beliefs or Magical Thinking Score', 'Unusual Perceptual Experiences Score', 
+                    'Odd or Eccentric Behavior Score', 'No Close Friends Score', 
+                    'Odd Speech Score', 'Constricted Affect Score', 'Suspiciousness Score'];
+
+  var thresholds = [10, 10, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];  // These are the threshold scores for each category
+  
+  if (scores['Total Score'] >= 25) {
+    interpretations = 'Total Score: ' + scores['Total Score'] + ' out of 74\n'
+  } else {
+    interpretations = 'Total Score: ' + scores['Total Score'] + ' out of 74\n'
+  }
+
+  for (var i = 0; i < categories.length; i++) {
+    if (scores[categories[i]] >= thresholds[i]) {
+      interpretations += categories[i] + ': (' + scores[categories[i]] + '/' + thresholds[i] + ') ' + interpret[categories[i]] + '\n';
+    } else {
+      interpretations += categories[i] + ': (' + scores[categories[i]] + '/' + thresholds[i] + ') Not Present' + '\n';
+    }
+  }
+
+  return interpretations;
+}
+
+
+
+    // Add an event listener to the submit button
+    document.getElementById('submit-button').addEventListener('click', function() {
+      calculateScores();
+    });
+  });
+</script>
+
+</body>
+</html>
