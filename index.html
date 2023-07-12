@@ -133,7 +133,7 @@ body{
   38: "Do you often feel nervous when you are in a group of unfamiliar people?",
   39: "Can other people feel your feelings when they are not there?",
   40: "Have you ever seen things invisible to other people?",
-  41: "Do you feel that there is no-one you are really close to outside of your immediate family, or people you can confide in or talk to about personal problems?",
+  41: "Do you feel that there is no-one you are really close to outside of your immediate family, people you can trust with personal problems?",
   42: "Some people find me a bit vague and elusive during a conversation.",
   43: "I am poor at returning social courtesies and gestures.",
   44: "Do you often pick up hidden threats or put-downs from what people say or do?",
@@ -289,7 +289,7 @@ function interpretScores(scores) {
     "Excessive Social Anxiety Score":"This indicates heightened anxiety in social situations, leading to discomfort or avoidance.",
     "Odd Beliefs or Magical Thinking Score":"This suggests the endorsement of unusual or idiosyncratic beliefs or beliefs in magical or supernatural phenomena.",
     "Unusual Perceptual Experiences Score":"This indicates experiences of perceptual phenomena that may be uncommon or unconventional, such as illusions or hallucinations.",
-    "Odd or Eccentric Behavior Score":"This suggests you often engage in behaviors perceived as eccentric or unconventional by others.",
+    "Odd or Eccentric Behavior Score":"This suggests you often engag in behaviors perceived as eccentric or unconventional by others.",
     "No Close Friends Score":"This indicates a lack of close friendships or limited social connections.",
     "Odd Speech Score":"This suggests unconventional speech patterns, including unusual word usage, idiosyncratic expressions, or peculiar intonation.",
     "Constricted Affect Score":"This indicates limited emotional expressiveness or reduced range of emotional responses.",
@@ -307,7 +307,7 @@ function interpretScores(scores) {
   var thresholds = [10, 10, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];  // These are the threshold scores for each category
   
   if (scores['Total Score'] >= 42) {
-    interpretations = 'Total Score: ' + scores['Total Score'] + ' out of 74\nYour total score falls within the higher range, indicating a relatively higher presence of schizotypal traits. It\'s important to note that this questionnaire is not a diagnostic tool, but your score suggests a potential interest in exploring schizotypal characteristics further.'
+    interpretations = 'Total Score: ' + scores['Total Score'] + ' out of 74\nYour total score falls within the higher range, indicating a relatively higher presence of schizotypal traits.\nIt\'s important to note that this questionnaire is not a diagnostic tool, but your score suggests a potential interest in exploring schizotypal characteristics further.\n'
   } else {
     interpretations = 'Total Score: ' + scores['Total Score'] + ' out of 74\nYour total score falls within the lower range, suggesting a relatively lower presence of schizotypal traits.\n'
   }
