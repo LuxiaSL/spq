@@ -1,21 +1,61 @@
 <!DOCTYPE html>
+<html>
 <style>
 body{
-	background-color:tan;
-	text-align: center
+	background-color:beige;
+	text-align: center;
+	font-family: roboto;
 }
 .question{
-	font-size:225%;
+	font-size:200%;
 }
 .answers-box{
 	display:flex;
-	justify-content:space-around;
+	justify-content:space-evenly;
 }
 .answers{
-	font-size:175%;
+	padding-left: 2em;
+	font-size:1.75em;
+	position:relative;
 }
-.interpretations{
-	font-size:175%;
+.answers input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.radio-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.5em;
+  width: 1.5em;
+  background-color: #eee;
+  border-radius: 50%;
+}
+.answers:hover input ~ .radio-button {
+  background-color: #ccc;
+}
+.answers input:checked ~ .radio-button {
+  background-color: #917cd1;
+}
+.radio-button:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.answers input:checked ~ .radio-button:after {
+  display:block;
+}
+.answers .radio-button:after {
+  top:0.305em;
+  left:0.315em;
+  width:0.9em;
+  height:0.9em;
+  border-radius: 50%;
+  background: white;
+}
+#scores{
+	font-size:1.25em;
 }
 #header{
 	font-size:450%;
@@ -25,15 +65,18 @@ body{
 	font-style:italic;
 	margin-top:-2em;
 }
+#disclaimer{
+	font-family:courant;
+	font-size:0.975em;
+}
 </style>
-<html>
 <body>
 
 <h3 id='header'>Schizotypal Personality Questionnaire</h3>
-<p id='subheader'>Please take your time, and make sure to answer the following as close to your lived experience as possible!</p><br>
+<p id='subheader'>Please take your time, and make sure to answer the following as close to your lived experience as possible!<br></p>
+<p id='disclaimer'>Also, remember that this does not give a diagnosis, much like other online exams. It simply shows how many traits you align with that are generally considered symptoms for STPD.<br>It's also important to note that, in the study this questionnaire was made, it was seen that certain populations had higher scores than average.<br>For example, a survey of undergrads in Los Angeles had higher scores on average when compared to other undergraduate populations, and wider communites.<br>The author of the paper posits that this is due to the culture of the area, a more "comfortable atmosphere" that allows for the unusual behaviours/ideas to emerge.<br>Therefore, take the results with a grain of salt, and if you resonate with something, feel free to explore!</p><br>
 
 <form id="questionnaire">
-  <!-- Questions and radio buttons will be inserted here by JavaScript -->
 </form>
 
 <button id="submit-button">Submit</button>
@@ -41,7 +84,7 @@ body{
 
 <h2>Scores and Interpretations</h2>
 
-<pre id="scores"></pre>
+<pre id="scores">Hit Submit!</pre>
 
 
 <script>
@@ -148,8 +191,10 @@ body{
         var question = questionnaireData[item];
         document.getElementById('questionnaire').innerHTML += 
             '<br><p class="question">'+ i + ': ' + question + '</p>' +
-            '<input type="radio" name="' + item + '" value="1"> Yes<br>' +
-            '<input type="radio" name="' + item + '" value="0" checked> No<br><br>';
+			'<div class="answers-box">' +
+            '<label class="answers">Yes <input type="radio" name="' + item + '" value="1"><span class="radio-button"></span></label>' +
+            '<label class="answers">No <input type="radio" name="' + item + '" value="0" checked><span class="radio-button"></span></label>' + 
+			'</div><br><br>';
 			i++;
     }
 
@@ -237,18 +282,18 @@ body{
 function interpretScores(scores) {
 	// define the interpretations
    let interpret = {
-	"Cognitive-Perceptual Score":"Your score in the Cognitive-Perceptual factor suggests a tendency to experience unusual perceptual phenomena, odd thoughts, and beliefs.",
-    "Interpersonal Score":"Your score in the Interpersonal factor indicates difficulty with interpersonal relationships and social interactions. You may experience social anxiety, discomfort, or have limited close friendships.",
-    "Disorganized Score":"Your score in the Disorganized factor reflects disorganized thinking, speech, or behavior. You may exhibit eccentric or odd behaviors that are perceived as unusual by others.",
-    "Ideas of Reference Score":"Your score in Ideas of Reference suggests a tendency to interpret neutral events as personally significant or having special meaning to oneself.",
-    "Excessive Social Anxiety Score":"Your score in Excessive Social Anxiety indicates heightened anxiety in social situations, leading to discomfort or avoidance.",
-    "Odd Beliefs or Magical Thinking Score":"Your score in Odd Beliefs or Magical Thinking suggests the endorsement of unusual or idiosyncratic beliefs or beliefs in magical or supernatural phenomena.",
-    "Unusual Perceptual Experiences Score":"Your score in Unusual Perceptual Experiences indicates experiences of perceptual phenomena that may be uncommon or unconventional, such as illusions or hallucinations.",
-    "Odd or Eccentric Behavior Score":"Your score in Odd or Eccentric Behavior suggests engaging in behaviors perceived as eccentric or unconventional by others.",
-    "No Close Friends Score":"Your score in No Close Friends indicates a lack of close friendships or limited social connections.",
-    "Odd Speech Score":"Your score in Odd Speech suggests unconventional speech patterns, including unusual word usage, idiosyncratic expressions, or peculiar intonation.",
-    "Constricted Affect Score":"Your score in Constricted Affect indicates limited emotional expressiveness or reduced range of emotional responses.",
-    "Suspiciousness Score":"Your score in Suspiciousness suggests a heightened level of suspiciousness or mistrust toward others."
+	"Cognitive-Perceptual Score":"This suggests a tendency to experience unusual perceptual phenomena, odd thoughts, and beliefs.",
+    "Interpersonal Score":"This indicates difficulty with interpersonal relationships and social interactions. You may experience social anxiety, discomfort, or have limited close friendships.",
+    "Disorganized Score":"This reflects disorganized thinking, speech, or behavior. You may exhibit eccentric or odd behaviors that are perceived as unusual by others.",
+    "Ideas of Reference Score":"This suggests a tendency to interpret neutral events as personally significant or having special meaning to oneself.",
+    "Excessive Social Anxiety Score":"This indicates heightened anxiety in social situations, leading to discomfort or avoidance.",
+    "Odd Beliefs or Magical Thinking Score":"This suggests the endorsement of unusual or idiosyncratic beliefs or beliefs in magical or supernatural phenomena.",
+    "Unusual Perceptual Experiences Score":"This indicates experiences of perceptual phenomena that may be uncommon or unconventional, such as illusions or hallucinations.",
+    "Odd or Eccentric Behavior Score":"This suggests you often engag in behaviors perceived as eccentric or unconventional by others.",
+    "No Close Friends Score":"This indicates a lack of close friendships or limited social connections.",
+    "Odd Speech Score":"This suggests unconventional speech patterns, including unusual word usage, idiosyncratic expressions, or peculiar intonation.",
+    "Constricted Affect Score":"This indicates limited emotional expressiveness or reduced range of emotional responses.",
+    "Suspiciousness Score":"This suggests a heightened level of suspiciousness or mistrust toward others."
   }
   
   var interpretations = '';
@@ -261,17 +306,17 @@ function interpretScores(scores) {
 
   var thresholds = [10, 10, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];  // These are the threshold scores for each category
   
-  if (scores['Total Score'] >= 25) {
-    interpretations = 'Total Score: ' + scores['Total Score'] + ' out of 74\n'
+  if (scores['Total Score'] >= 42) {
+    interpretations = 'Total Score: ' + scores['Total Score'] + ' out of 74\nYour total score falls within the higher range, indicating a relatively higher presence of schizotypal traits. It\'s important to note that this questionnaire is not a diagnostic tool, but your score suggests a potential interest in exploring schizotypal characteristics further.'
   } else {
-    interpretations = 'Total Score: ' + scores['Total Score'] + ' out of 74\n'
+    interpretations = 'Total Score: ' + scores['Total Score'] + ' out of 74\nYour total score falls within the lower range, suggesting a relatively lower presence of schizotypal traits.\n'
   }
 
   for (var i = 0; i < categories.length; i++) {
     if (scores[categories[i]] >= thresholds[i]) {
-      interpretations += categories[i] + ': (' + scores[categories[i]] + '/' + thresholds[i] + ') ' + interpret[categories[i]] + '\n';
+      interpretations += categories[i] + ': (' + scores[categories[i]] + '/' + thresholds[i] + ')\n' + interpret[categories[i]] + '\n';
     } else {
-      interpretations += categories[i] + ': (' + scores[categories[i]] + '/' + thresholds[i] + ') Not Present' + '\n';
+      interpretations += categories[i] + ': (' + scores[categories[i]] + '/' + thresholds[i] + ')\nNot Present\n';
     }
   }
 
